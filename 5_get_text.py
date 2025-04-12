@@ -32,6 +32,16 @@ driver.find_element(By.XPATH, '//*[@text = "Text"]').click()
 notes1 = "Test Notes 1"
 driver.find_element(By.ID, "com.socialnmobile.dictapps.notepad.color.note:id/edit_note").send_keys(notes1)
 
+#============== BACK ==================#
+driver.find_element(By.ID, "com.socialnmobile.dictapps.notepad.color.note:id/back_btn").click()
+driver.find_element(By.ID, "com.socialnmobile.dictapps.notepad.color.note:id/back_btn").click()
+title1 = driver.find_element(By.ID, "com.socialnmobile.dictapps.notepad.color.note:id/title").text
+
+#===============True=================#
+assert_that (title1).is_equal_to(notes1)
+
+#===============False condition=================#
+assert_that (title1).is_equal_to(notes1+"qqe")
 
 #========================================= QUIT DRIVER ==============================================#
 
