@@ -36,7 +36,7 @@ for i in range(1,16):
     driver.find_element(By.ID, "com.socialnmobile.dictapps.notepad.color.note:id/back_btn").click()
     driver.find_element(By.ID, "com.socialnmobile.dictapps.notepad.color.note:id/back_btn").click()
 
-def scroll_to_element (driver, element, max_scroll*5);
+def scroll_to_element (driver, element, max_scroll=5):
     window_size = driver.get_window_size()
     width_center = window_size['width'] / 2
     height_start = window_size['height'] / 2

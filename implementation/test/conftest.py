@@ -1,26 +1,29 @@
 import pytest
 import time
 from appium import webdriver
-from helper.config import *
+from helper.config import *  
+from appium.options.android import UiAutomator2Options
 
 @pytest.fixture()
 def open_driver():
-    caps = {
-        "platformName": "Android",
-        "appium:udid": my_udid,
-        "appium:automationName": "UiAutomator2",
-        "appium:appPackage": appPackage,
-        "appium:appActivity": appActivity,
-        "appium:autoGrantPermissions": True,
-        "appium:noReset": False,
-        "appium:ignoreHiddenApiPolicyError": True,
-        "appium:disableAnimations": True,
-        "appium:disableIdLocatorAutocompletions": True
-    }
-    direct = True
-    driver =webdriver.Remote(appium_url, caps, direct_connection=direct)
+    # Menggunakan UiAutomator2Options untuk set capabilities
+    options = UiAutomator2Options()
+    options.platform_name = "Android"
+    options.udid = my_udid
+    options.automation_name = "UiAutomator2"
+    options.app_package = appPackage
+    options.app_activity = appActivity
+    options.auto_grant_permissions = True
+    options.no_reset = False
+    options.ignore_hidden_api_policy_error = True
+    options.set_capability("disableAnimations", True)
+    options.set_capability("disableIdLocatorAutocompletions", True)
+
+    driver = webdriver.Remote(appium_url, options=options)
     return driver
 
+
+# Fixture untuk hook yang berjalan sebelum dan setelah setiap tes
 @pytest.fixture(scope='function', autouse=True)
 def hook(request, open_driver):
     print("before test")
@@ -30,10 +33,9 @@ def hook(request, open_driver):
     open_driver.quit()
     print("after test")
 
-
+# Fixture untuk setup dan teardown pada level suite
 @pytest.fixture(scope='session', autouse=True)
 def suite(request):
     print("before suite")
     yield
     print("after suite")
-
