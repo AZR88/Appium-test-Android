@@ -6,7 +6,7 @@ from appium.options.android import UiAutomator2Options
 
 @pytest.fixture()
 def open_driver():
-    # Menggunakan UiAutomator2Options untuk set capabilities
+    
     options = UiAutomator2Options()
     options.platform_name = "Android"
     options.udid = my_udid
@@ -23,7 +23,6 @@ def open_driver():
     return driver
 
 
-# Fixture untuk hook yang berjalan sebelum dan setelah setiap tes
 @pytest.fixture(scope='function', autouse=True)
 def hook(request, open_driver):
     print("before test")
@@ -37,5 +36,6 @@ def hook(request, open_driver):
 @pytest.fixture(scope='session', autouse=True)
 def suite(request):
     print("before suite")
+    print("run suite")
     yield
     print("after suite")
